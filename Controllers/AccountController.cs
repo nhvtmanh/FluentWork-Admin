@@ -8,5 +8,9 @@ namespace FluentWork_Admin.Controllers
         {
             return View();
         }
+        public IActionResult Register()
+        {
+            return View();
+        }
     }
 }
