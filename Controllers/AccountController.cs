@@ -12,5 +12,9 @@ namespace FluentWork_Admin.Controllers
         {
             return View();
         }
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
     }
 }
