@@ -6,6 +6,7 @@ namespace FluentWork_Admin.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["ActiveMenu"] = "Dashboard";
             return View();
         }
     }
