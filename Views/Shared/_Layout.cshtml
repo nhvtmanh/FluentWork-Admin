@@ -16,6 +16,9 @@
 
     <!-- Custom styles for this template-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- DataTables styles -->
+    <link href="~/vendor/datatables/datatables.bootstrap4.min.css" rel="stylesheet" />
 </head>
 <body id="page-top">
 
@@ -363,6 +366,10 @@
     <!-- Page level custom scripts -->
     <script src="~/js/demo/chart-area-demo.js"></script>
     <script src="~/js/demo/chart-pie-demo.js"></script>
+
+    <!-- DataTables scripts -->
+    <script src="~/vendor/datatables/jquery.datatables.min.js"></script>
+    <script src="~/vendor/datatables/datatables.bootstrap4.min.js"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
