@@ -55,5 +55,9 @@ namespace FluentWork_Admin.Controllers
             };
             return Json(res);
         }
+        public IActionResult P_Add()
+        {
+            return PartialView();
+        }
     }
 }

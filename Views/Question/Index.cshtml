@@ -1,11 +1,11 @@
 ﻿@section Scripts {
-    <script src="~/controller/question.js"></script>
+    <script src="~/controller/question.js" asp-append-version="true"></script>
 }
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Manage questions</h1>
-    <button class="d-none d-sm-inline-block btn btn-primary shadow-sm">
+    <button class="d-none d-sm-inline-block btn btn-primary shadow-sm" id="btnCreate">
         <i class="fas fa-plus text-white-50"></i> Create new
     </button>
 </div>
@@ -164,6 +164,14 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createQuestionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" id="createQuestionModalContent">
+
         </div>
     </div>
 </div>

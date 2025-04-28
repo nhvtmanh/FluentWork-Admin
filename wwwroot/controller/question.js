@@ -1,6 +1,12 @@
 ﻿// Call the dataTables jQuery plugin
 $(document).ready(function () {
     LoadDataTable();
+
+    $('#btnCreate').click(function () {
+        $("#createQuestionModalContent").load('/Question/P_Add', function () {
+            $("#createModal").modal('show');
+        });
+    });
 });
 
 function LoadDataTable() {
