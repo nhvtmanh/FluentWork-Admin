@@ -2,12 +2,45 @@
 $(document).ready(function () {
     LoadDataTable();
 
-    $('#btnCreate').click(function () {
-        $("#createQuestionModalContent").load('/Question/P_Add', function () {
-            $("#createModal").modal('show');
-        });
-    });
+    //'use strict';
+    //const forms = document.querySelectorAll('.needs-validation');
+    //Array.from(forms).forEach(function (form) {
+    //    form.addEventListener('submit', function (event) {
+    //        if (!form.checkValidity()) {
+    //            event.preventDefault();
+    //            event.stopPropagation();
+    //        }
+    //        form.classList.add('was-validated');
+    //    }, false);
+    //});
+
 });
+
+//Change Topic Dropdown based on Type selection
+function ToggleTopicDropdown() {
+    const selectedType = $("select#Type").val();
+
+    const vocabularyTopicGroup = $("#vocabularyTopicGroup")
+    const grammarTopicGroup = $("#grammarTopicGroup");
+
+    const vocabularyDropdown = $("#VocabularyTopic");
+    const grammarDropdown = $("#GrammarTopic");
+
+    if (selectedType === "Vocabulary") {
+        vocabularyTopicGroup.show();
+        grammarTopicGroup.hide();
+        grammarDropdown.val(""); //Clear Grammar dropdown
+    } else if (selectedType === "Grammar") {
+        vocabularyTopicGroup.hide();
+        grammarTopicGroup.show();
+        vocabularyDropdown.val(""); //Clear Vocabulary dropdown
+    } else {
+        vocabularyTopicGroup.hide();
+        grammarTopicGroup.hide();
+        vocabularyDropdown.val("");
+        grammarDropdown.val("");
+    }
+}
 
 function LoadDataTable() {
     dataTable = $('#dataTable').DataTable({
@@ -30,25 +63,32 @@ function LoadDataTable() {
                 }
             },
             {
-                data: "questionText"
+                data: "questionText",
+                className: "align-middle",
             },
             {
                 data: "type",
                 render: function (data) {
                     return typeHtml(data);
                 },
-                className: "text-center"
+                className: "text-center align-middle"
             },
             {
-                data: "topic",
-                className: "text-center"
+                data: "null",
+                render: function (data, type, row) {
+                    if (row.type === 'Vocabulary')
+                        return row.vocabularyTopic;
+                    else
+                        return row.grammarTopic;
+                },
+                className: "text-center align-middle"
             },
             {
                 data: "level",
                 render: function (data) {
                     return levelHtml(data);
                 },
-                className: "text-center"
+                className: "text-center align-middle"
             }
         ]
     });
@@ -83,4 +123,40 @@ const levelHtml = function (level) {
     else
         html = `<span class="badge p-2" style="background-color: #FFDBEA">${level}</span>`;
     return html;
+}
+
+function ShowAddModal() {
+    $("#questionModalContent").load('/Question/P_AddOrEdit', function () {
+        $("#questionModal").modal('show');
+    });
+}
+
+function Submit() {
+    let form = $("#questionForm");
+
+    if (!form.valid()) {
+        return;
+    }
+
+    let formData = new FormData(form[0]);
+    formData.append("__RequestVerificationToken", $('input[name="__RequestVerificationToken"]').val());
+
+    $.ajax({
+        type: "POST",
+        url: "/Question/P_AddOrEdit",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            if (response.status === 200) {
+                dataTable.ajax.reload();
+                $("#questionModal").modal('hide');
+            } else {
+                // Show error
+            }
+        },
+        error: function () {
+            // Show error
+        }
+    });
 }

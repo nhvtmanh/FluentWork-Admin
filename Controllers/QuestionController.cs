@@ -1,4 +1,5 @@
-﻿using FluentWork_Admin.Models;
+﻿using FluentWork_Admin.Enums;
+using FluentWork_Admin.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FluentWork_Admin.Controllers
@@ -19,31 +20,38 @@ namespace FluentWork_Admin.Controllers
                 {
                     Id = 1,
                     Type = "Vocabulary",
-                    Topic = "IT",
+                    VocabularyTopic = "IT",
+                    GrammarTopic = null,
                     Level = "Beginner",
-                    QuestionText = "What does CPU stand for?"
+                    QuestionText = "What does 'HTML' stand for?",
+                    Explanation = "HTML stands for HyperText Markup Language.",
                 },
                 new M_Question
                 {
                     Id = 2,
                     Type = "Grammar",
-                    Topic = "Tenses",
+                    VocabularyTopic = null,
+                    GrammarTopic = "Tense",
                     Level = "Intermediate",
-                    QuestionText = "Choose the correct past tense form of the verb."
+                    QuestionText = "What is the past tense of 'go'?",
+                    Explanation = "The past tense of 'go' is 'went'.",
                 },
                 new M_Question
                 {
                     Id = 3,
                     Type = "Vocabulary",
-                    Topic = "Finance",
+                    VocabularyTopic = "Business",
+                    GrammarTopic = null,
                     Level = "Advanced",
-                    QuestionText = "What is the definition of 'liquidity' in finance?"
-                }
+                    QuestionText = "What does 'ROI' stand for?",
+                    Explanation = "ROI stands for Return on Investment.",
+                },
             };
         }
         public IActionResult Index()
         {
             ViewData["ActiveMenu"] = "Question";
+            ViewBag.QuestionTypes = QuestionTypesProvider.GetTopics();
             return View();
         }
         [HttpGet]
@@ -55,9 +63,23 @@ namespace FluentWork_Admin.Controllers
             };
             return Json(res);
         }
-        public IActionResult P_Add()
+        public IActionResult P_AddOrEdit()
         {
+            ViewBag.GrammarTopics = GrammarTopicsProvider.GetTopics();
+            ViewBag.VocabularyTopics = VocabularyTopicsProvider.GetTopics();
             return PartialView();
+        }
+        [HttpPost]
+        public IActionResult P_AddOrEdit(EM_Question model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new { status = 400, message = "Validation failed." });
+            }
+
+            // Save logic here...
+
+            return Json(new { status = 200, message = "Question saved successfully." });
         }
     }
 }

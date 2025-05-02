@@ -1,11 +1,12 @@
 ﻿@section Scripts {
-    <script src="~/controller/question.js" asp-append-version="true"></script>
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script src="~/controller/question.js"></script>
 }
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Manage questions</h1>
-    <button class="d-none d-sm-inline-block btn btn-primary shadow-sm" id="btnCreate">
+    <button class="d-none d-sm-inline-block btn btn-primary shadow-sm" id="btnCreate" onclick="ShowAddModal()">
         <i class="fas fa-plus text-white-50"></i> Create new
     </button>
 </div>
@@ -16,10 +17,8 @@
     <!-- Type dropdown -->
     <div class="col form-group">
         <label for="questionType">Type</label>
-        <select class="form-control" id="questionType" name="questionType">
+        <select class="form-control" id="questionType" name="questionType" asp-items="ViewBag.QuestionTypes">
             <option class="dropdown-item" value="">All</option>
-            <option class="dropdown-item" value="Vocabulary">Vocabulary</option>
-            <option class="dropdown-item" value="Grammar">Grammar</option>
         </select>
     </div>
 
@@ -61,6 +60,7 @@
                         <th class="text-center">Level</th>
                     </tr>
                 </thead>
+                <tbody></tbody>
                 <tfoot>
                     <tr>
                         <th class="text-center">Actions</th>
@@ -70,107 +70,14 @@
                         <th class="text-center">Level</th>
                     </tr>
                 </tfoot>
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                    </tr>
-                    <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td>2011/07/25</td>
-                    </tr>
-                    <tr>
-                        <td>Ashton Cox</td>
-                        <td>Junior Technical Author</td>
-                        <td>San Francisco</td>
-                        <td>66</td>
-                        <td>2009/01/12</td>
-                    <tr>
-                        <td>Cedric Kelly</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>Edinburgh</td>
-                        <td>22</td>
-                        <td>2012/03/29</td>
-                    </tr>
-                    <tr>
-                        <td>Airi Satou</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>33</td>
-                        <td>2008/11/28</td>
-                    </tr>
-                    <tr>
-                        <td>Brielle Williamson</td>
-                        <td>Integration Specialist</td>
-                        <td>New York</td>
-                        <td>61</td>
-                        <td>2012/12/02</td>
-                    </tr>
-                    <tr>
-                        <td>Herrod Chandler</td>
-                        <td>Sales Assistant</td>
-                        <td>San Francisco</td>
-                        <td>59</td>
-                        <td>2012/08/06</td>
-                    </tr>
-                    <tr>
-                        <td>Rhona Davidson</td>
-                        <td>Integration Specialist</td>
-                        <td>Tokyo</td>
-                        <td>55</td>
-                        <td>2010/10/14</td>
-                    </tr>
-                    <tr>
-                        <td>Colleen Hurst</td>
-                        <td>Javascript Developer</td>
-                        <td>San Francisco</td>
-                        <td>39</td>
-                        <td>2009/09/15</td>
-                        
-                    </tr>
-                    <tr>
-                        <td>Sonya Frost</td>
-                        <td>Software Engineer</td>
-                        <td>Edinburgh</td>
-                        <td>23</td>
-                        <td>2008/12/13</td>
-                    </tr>
-                    <tr>
-                        <td>Jena Gaines</td>
-                        <td>Office Manager</td>
-                        <td>London</td>
-                        <td>30</td>
-                        <td>2008/12/19</td>
-                    </tr>
-                    <tr>
-                        <td>Quinn Flynn</td>
-                        <td>Support Lead</td>
-                        <td>Edinburgh</td>
-                        <td>22</td>
-                        <td>2013/03/03</td>
-                    </tr>
-                    <tr>
-                        <td>Charde Marshall</td>
-                        <td>Regional Director</td>
-                        <td>San Francisco</td>
-                        <td>36</td>
-                        <td>2008/10/16</td>
-                    </tr>
-                </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createQuestionModalLabel" aria-hidden="true">
+<div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content" id="createQuestionModalContent">
+        <div class="modal-content" id="questionModalContent">
 
         </div>
     </div>
