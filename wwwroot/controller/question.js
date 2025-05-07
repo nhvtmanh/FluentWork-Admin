@@ -1,22 +1,48 @@
-﻿// Call the dataTables jQuery plugin
+﻿let dataTable;
+
 $(document).ready(function () {
     LoadDataTable();
-
-    //'use strict';
-    //const forms = document.querySelectorAll('.needs-validation');
-    //Array.from(forms).forEach(function (form) {
-    //    form.addEventListener('submit', function (event) {
-    //        if (!form.checkValidity()) {
-    //            event.preventDefault();
-    //            event.stopPropagation();
-    //        }
-    //        form.classList.add('was-validated');
-    //    }, false);
-    //});
-
+    FilterDataTable();
+    HandleChangeTypeDropdown();
 });
 
-//Change Topic Dropdown based on Type selection
+function FilterDataTable() {
+    $('#questionType, #questionTopic, #questionLevel').on('change', function () {
+        LoadDataTable();
+    });
+}
+
+//Handle change Type dropdown
+function HandleChangeTypeDropdown() {
+    $('#questionType').change(function () {
+        let selectedType = $(this).val();
+
+        $.ajax({
+            url: '/Question/GetTopicsByType',
+            type: 'GET',
+            data: { type: selectedType },
+            success: function (topics) {
+                let $topicDropdown = $('#questionTopic');
+                $topicDropdown.empty();
+                $topicDropdown.append('<option value="">All</option>');
+
+                $.each(topics, function (i, topic) {
+                    $topicDropdown.append($('<option>', {
+                        value: topic.value,
+                        text: topic.text
+                    }));
+                });
+
+                LoadDataTable();
+            },
+            error: function () {
+                ShowToastNoti('error', 'Failed to load topics.');
+            }
+        });
+    });
+}
+
+//Change Topic dropdown based on Type selection
 function ToggleTopicDropdown() {
     const selectedType = $("select#Type").val();
 
@@ -43,10 +69,26 @@ function ToggleTopicDropdown() {
 }
 
 function LoadDataTable() {
+    if ($.fn.DataTable.isDataTable('#dataTable')) {
+        dataTable.ajax.reload();
+        return;
+    }
+
     dataTable = $('#dataTable').DataTable({
+        order: [[1, 'asc']],
         ajax: {
             url: "/Question/GetList",
             type: "GET",
+            data: function (d) {
+                d.topic = $('#questionType').val();
+
+                let topic = $('#questionTopic').val();
+
+                d.vocabularyTopic = d.topic === 'Vocabulary' ? topic : null;
+                d.grammarTopic = d.topic === 'Grammar' ? topic : null;
+
+                d.level = $('#questionLevel').val();
+            },
             datatype: "json",
             dataSrc: function (response) {
                 return response.data;
@@ -58,16 +100,17 @@ function LoadDataTable() {
         columns: [
             {
                 data: "id",
+                orderable: false,
                 render: function (data) {
                     return buttonActionHtml(data);
                 }
             },
             {
-                data: "questionText",
-                className: "align-middle",
+                data: "question_text",
+                className: "align-middle"
             },
             {
-                data: "type",
+                data: "topic",
                 render: function (data) {
                     return typeHtml(data);
                 },
@@ -76,10 +119,10 @@ function LoadDataTable() {
             {
                 data: "null",
                 render: function (data, type, row) {
-                    if (row.type === 'Vocabulary')
-                        return row.vocabularyTopic;
+                    if (row.topic === 'Vocabulary')
+                        return row.vocabulary_topic;
                     else
-                        return row.grammarTopic;
+                        return row.grammar_topic;
                 },
                 className: "text-center align-middle"
             },
@@ -148,15 +191,20 @@ function Submit() {
         contentType: false,
         processData: false,
         success: function (response) {
-            if (response.status === 200) {
-                dataTable.ajax.reload();
-                $("#questionModal").modal('hide');
-            } else {
-                // Show error
-            }
+            ShowToastNoti('success', response.message);
+            $("#questionModal").modal("hide");
+            dataTable.ajax.reload();
         },
-        error: function () {
-            // Show error
+        error: function (err) {
+            if (err.status === 400) {
+                let errorMessages = err.responseJSON.message;
+                errorMessages.forEach(function (message) {
+                    ShowToastNoti('error', message);
+                })
+            } else {
+                //Handle other errors (e.g., server errors)
+                ShowToastNoti('error', 'An error occurred, please try again.');
+            }
         }
     });
 }

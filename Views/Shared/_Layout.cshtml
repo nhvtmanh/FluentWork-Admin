@@ -20,8 +20,8 @@
     <!-- DataTables styles -->
     <link href="~/vendor/datatables/datatables.bootstrap4.min.css" rel="stylesheet" />
 
-    <!-- iziToast styles -->
-    <link href="~/vendor/izitoast/css/izitoast.min.css" rel="stylesheet" />
+    <!-- Toastr styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 </head>
 <body id="page-top">
 
@@ -94,7 +94,6 @@
 
         </ul>
         <!-- End of Sidebar -->
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -311,7 +310,6 @@
 
                 </nav>
                 <!-- End of Topbar -->
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <main role="main">
@@ -363,19 +361,12 @@
     <!-- Custom scripts for all pages-->
     <script src="~/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="~/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="~/js/demo/chart-area-demo.js"></script>
-    <script src="~/js/demo/chart-pie-demo.js"></script>
-
     <!-- DataTables scripts -->
     <script src="~/vendor/datatables/jquery.datatables.min.js"></script>
     <script src="~/vendor/datatables/datatables.bootstrap4.min.js"></script>
 
-    <!-- iziToast scripts -->
-    <script src="~/vendor/izitoast/js/izitoast.min.js"></script>
+    <!-- Toastr scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

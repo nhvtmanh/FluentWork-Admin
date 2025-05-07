@@ -1,7 +1,17 @@
+using FluentWork_Admin.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient("ApiClient", httpClient =>
+{
+    string apiUrl = builder.Configuration.GetValue<string>("ApiConfig:ApiUrl")!;
+    httpClient.BaseAddress = new Uri(apiUrl);
+});
+
+builder.Services.AddScoped<IQuestionService, QuestionService>();
 
 var app = builder.Build();
 

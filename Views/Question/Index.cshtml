@@ -1,6 +1,6 @@
 ﻿@section Scripts {
     <partial name="_ValidationScriptsPartial"></partial>
-    <script src="~/controller/question.js"></script>
+    <script src="~/controller/question.js" asp-append-version="true"></script>
 }
 
 <!-- Page Heading -->
@@ -18,7 +18,7 @@
     <div class="col form-group">
         <label for="questionType">Type</label>
         <select class="form-control" id="questionType" name="questionType" asp-items="ViewBag.QuestionTypes">
-            <option class="dropdown-item" value="">All</option>
+            <option value="">All</option>
         </select>
     </div>
 
@@ -26,18 +26,15 @@
     <div class="col form-group">
         <label for="questionTopic">Topic</label>
         <select class="form-control" id="questionTopic" name="questionTopic">
-            <option class="dropdown-item" value="">All</option>
+            <option value="">All</option>
         </select>
     </div>
 
     <!-- Level dropdown -->
     <div class="col form-group">
         <label for="questionLevel">Level</label>
-        <select class="form-control" id="questionLevel" name="questionLevel">
-            <option class="dropdown-item" value="">All</option>
-            <option class="dropdown-item" value="Beginner">Beginner</option>
-            <option class="dropdown-item" value="Intermediate">Intermediate</option>
-            <option class="dropdown-item" value="Advanced">Advanced</option>
+        <select class="form-control" id="questionLevel" name="questionLevel" asp-items="ViewBag.QuestionLevels">
+            <option value="">All</option>
         </select>
     </div>
 
@@ -50,10 +47,10 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table id="dataTable" class="table table-sm table-bordered table-striped nowrap w-100">
                 <thead>
                     <tr>
-                        <th class="text-center">Actions</th>
+                        <th class="no-sort text-center">Actions</th>
                         <th class="text-center">Question</th>
                         <th class="text-center">Type</th>
                         <th class="text-center">Topic</th>
@@ -63,7 +60,7 @@
                 <tbody></tbody>
                 <tfoot>
                     <tr>
-                        <th class="text-center">Actions</th>
+                        <th class="no-sort text-center">Actions</th>
                         <th class="text-center">Question</th>
                         <th class="text-center">Type</th>
                         <th class="text-center">Topic</th>
