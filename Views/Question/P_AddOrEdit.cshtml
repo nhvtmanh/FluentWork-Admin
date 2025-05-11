@@ -85,7 +85,29 @@
 
             @if (Model != null)
             {
-                
+                <div class="form-row">
+                    @for (int i = 0; i < Model.Options.Count; i++)
+                    {
+                        if (Model.Options[i].IsCorrect)
+                        {
+                            <div class="form-group col-md-6">
+                                <input asp-for="@Model.Options[i].Id" type="hidden" />
+                                <input asp-for="@Model.Options[i].QuestionId" value="@Model.Id" type="hidden" />
+                                <input asp-for="@Model.Options[i].OptionText" class="form-control border-success" required>
+                                <input asp-for="@Model.Options[i].IsCorrect" type="hidden" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group col-md-6">
+                                <input asp-for="@Model.Options[i].Id" type="hidden" />
+                                <input asp-for="@Model.Options[i].QuestionId" value="@Model.Id" type="hidden" />
+                                <input asp-for="@Model.Options[i].OptionText" class="form-control border-danger" required>
+                                <input asp-for="@Model.Options[i].IsCorrect" type="hidden" />
+                            </div>
+                        }
+                    }
+                </div>
             }
             else
             {

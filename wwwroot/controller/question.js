@@ -42,32 +42,6 @@ function HandleChangeTypeDropdown() {
     });
 }
 
-//Change Topic dropdown based on Type selection
-function ToggleTopicDropdown() {
-    const selectedType = $("select#Type").val();
-
-    const vocabularyTopicGroup = $("#vocabularyTopicGroup")
-    const grammarTopicGroup = $("#grammarTopicGroup");
-
-    const vocabularyDropdown = $("#VocabularyTopic");
-    const grammarDropdown = $("#GrammarTopic");
-
-    if (selectedType === "Vocabulary") {
-        vocabularyTopicGroup.show();
-        grammarTopicGroup.hide();
-        grammarDropdown.val(""); //Clear Grammar dropdown
-    } else if (selectedType === "Grammar") {
-        vocabularyTopicGroup.hide();
-        grammarTopicGroup.show();
-        vocabularyDropdown.val(""); //Clear Vocabulary dropdown
-    } else {
-        vocabularyTopicGroup.hide();
-        grammarTopicGroup.hide();
-        vocabularyDropdown.val("");
-        grammarDropdown.val("");
-    }
-}
-
 function LoadDataTable() {
     if ($.fn.DataTable.isDataTable('#dataTable')) {
         dataTable.ajax.reload();
@@ -80,12 +54,12 @@ function LoadDataTable() {
             url: "/Question/GetList",
             type: "GET",
             data: function (d) {
-                d.topic = $('#questionType').val();
+                d.type = $('#questionType').val();
 
                 let topic = $('#questionTopic').val();
 
-                d.vocabularyTopic = d.topic === 'Vocabulary' ? topic : null;
-                d.grammarTopic = d.topic === 'Grammar' ? topic : null;
+                d.vocabularyTopic = d.type === 'Vocabulary' ? topic : null;
+                d.grammarTopic = d.type === 'Grammar' ? topic : null;
 
                 d.level = $('#questionLevel').val();
             },
@@ -102,7 +76,7 @@ function LoadDataTable() {
                 data: "id",
                 orderable: false,
                 render: function (data) {
-                    return buttonActionHtml(data);
+                    return RenderActionButtons(data);
                 }
             },
             {
@@ -110,16 +84,16 @@ function LoadDataTable() {
                 className: "align-middle"
             },
             {
-                data: "topic",
+                data: "type",
                 render: function (data) {
-                    return typeHtml(data);
+                    return RenderEnglishType(data);
                 },
                 className: "text-center align-middle"
             },
             {
                 data: "null",
                 render: function (data, type, row) {
-                    if (row.topic === 'Vocabulary')
+                    if (row.type === 'Vocabulary')
                         return row.vocabulary_topic;
                     else
                         return row.grammar_topic;
@@ -129,7 +103,7 @@ function LoadDataTable() {
             {
                 data: "level",
                 render: function (data) {
-                    return levelHtml(data);
+                    return RenderEnglishLevel(data);
                 },
                 className: "text-center align-middle"
             }
@@ -137,40 +111,18 @@ function LoadDataTable() {
     });
 }
 
-const buttonActionHtml = function (id) {
-    let html = ``;
-    html += `<button class="btn btn-success btn-circle mx-1" onclick="ShowModalEdit(${id})">
-                <i class="fas fa-pen"></i>
-            </button>`;
-    html += `<button class="btn btn-danger btn-circle" onclick="ShowModalDelete(${id})">
-                <i class="fas fa-trash"></i>
-            </button>`
-    return html;
-}
-
-const typeHtml = function (type) {
-    let html = '';
-    if (type === 'Vocabulary')
-        html = `<span class="badge p-2" style="background-color: #DED0F2">${type}</span>`;
-    else
-        html = `<span class="badge p-2" style="background-color: #D4F2D0">${type}</span>`;
-    return html;
-}
-
-const levelHtml = function (level) {
-    let html = '';
-    if (level === 'Beginner')
-        html = `<span class="badge p-2" style="background-color: #D6EEFC">${level}</span>`;
-    else if (level === 'Intermediate')
-        html = `<span class="badge p-2" style="background-color: #FFDEBD">${level}</span>`;
-    else
-        html = `<span class="badge p-2" style="background-color: #FFDBEA">${level}</span>`;
-    return html;
-}
-
 function ShowAddModal() {
     $("#questionModalContent").load('/Question/P_AddOrEdit', function () {
         $("#questionModal").modal('show');
+    });
+}
+
+function ShowEditModal(id) {
+    $("#questionModalContent").load(`/Question/P_AddOrEdit?id=${id}`, function () {
+        $("#questionModal").modal('show');
+
+        //Display Topic dropdown
+        ToggleTopicDropdown();
     });
 }
 

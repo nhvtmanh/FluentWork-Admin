@@ -25,3 +25,63 @@ function ShowToastNoti(type, message) {
 
     toastr[type](message); //type = success, error, info, warning
 }
+
+//Change Topic dropdown based on Type selection
+function ToggleTopicDropdown() {
+    const selectedType = $("select#Type").val();
+
+    const vocabularyTopicGroup = $("#vocabularyTopicGroup")
+    const grammarTopicGroup = $("#grammarTopicGroup");
+
+    const vocabularyDropdown = $("#VocabularyTopic");
+    const grammarDropdown = $("#GrammarTopic");
+
+    if (selectedType === "Vocabulary") {
+        vocabularyTopicGroup.show();
+        grammarTopicGroup.hide();
+        grammarDropdown.val(""); //Clear Grammar dropdown
+    } else if (selectedType === "Grammar") {
+        vocabularyTopicGroup.hide();
+        grammarTopicGroup.show();
+        vocabularyDropdown.val(""); //Clear Vocabulary dropdown
+    } else {
+        vocabularyTopicGroup.hide();
+        grammarTopicGroup.hide();
+        vocabularyDropdown.val("");
+        grammarDropdown.val("");
+    }
+}
+
+//Render action buttons in DataTable
+function RenderActionButtons(id) {
+    let html = ``;
+    html += `<button class="btn btn-success btn-circle mx-1" onclick="ShowEditModal(${id})">
+                <i class="fas fa-pen"></i>
+            </button>`;
+    html += `<button class="btn btn-danger btn-circle" onclick="ShowDeleteModal(${id})">
+                <i class="fas fa-trash"></i>
+            </button>`
+    return html;
+}
+
+//Render English Type in DataTable
+function RenderEnglishType(type) {
+    let html = '';
+    if (type === 'Vocabulary')
+        html = `<span class="badge p-2" style="background-color: #DED0F2">${type}</span>`;
+    else
+        html = `<span class="badge p-2" style="background-color: #D4F2D0">${type}</span>`;
+    return html;
+}
+
+//Render English Level in DataTable
+function RenderEnglishLevel(level) {
+    let html = '';
+    if (level === 'Beginner')
+        html = `<span class="badge p-2" style="background-color: #D6EEFC">${level}</span>`;
+    else if (level === 'Intermediate')
+        html = `<span class="badge p-2" style="background-color: #FFDEBD">${level}</span>`;
+    else
+        html = `<span class="badge p-2" style="background-color: #FFDBEA">${level}</span>`;
+    return html;
+}

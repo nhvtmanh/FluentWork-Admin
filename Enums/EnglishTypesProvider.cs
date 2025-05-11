@@ -2,7 +2,7 @@
 
 namespace FluentWork_Admin.Enums
 {
-    public static class QuestionTypesProvider
+    public static class EnglishTypesProvider
     {
         public static List<SelectListItem> GetTopics() => new()
         {

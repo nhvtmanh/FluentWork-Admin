@@ -19,7 +19,7 @@ namespace FluentWork_Admin.Controllers
         public IActionResult Index()
         {
             ViewData["ActiveMenu"] = "Question";
-            ViewBag.QuestionTypes = QuestionTypesProvider.GetTopics();
+            ViewBag.QuestionTypes = EnglishTypesProvider.GetTopics();
             ViewBag.QuestionLevels = EnglishLevelsProvider.GetLevels();
             return View();
         }
@@ -29,11 +29,11 @@ namespace FluentWork_Admin.Controllers
         {
             List<SelectListItem> topics = new List<SelectListItem>();
 
-            if (type == QuestionType.VOCABULARY)
+            if (type == EnglishType.VOCABULARY)
             {
                 topics = VocabularyTopicsProvider.GetTopics();
             }
-            else if (type == QuestionType.GRAMMAR)
+            else if (type == EnglishType.GRAMMAR)
             {
                 topics = GrammarTopicsProvider.GetTopics();
             }
@@ -42,17 +42,29 @@ namespace FluentWork_Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetList(string? topic, string? vocabularyTopic, string? grammarTopic, string? level)
+        public async Task<JsonResult> GetList(string? type, string? vocabularyTopic, string? grammarTopic, string? level)
         {
-            var res = await _questionService.GetList(topic, vocabularyTopic, grammarTopic, level);
+            var res = await _questionService.GetList(type, vocabularyTopic, grammarTopic, level);
             return Json(res);
         }
 
-        public IActionResult P_AddOrEdit()
+        public async Task<IActionResult> P_AddOrEdit(int id)
         {
             ViewBag.GrammarTopics = GrammarTopicsProvider.GetTopics();
             ViewBag.VocabularyTopics = VocabularyTopicsProvider.GetTopics();
             ViewBag.EnglishLevels = EnglishLevelsProvider.GetLevels();
+
+            if (id > 0) //Show edit modal
+            {
+                var res = await _questionService.GetById(id);
+
+                if (res.StatusCode == StatusCodes.Status200OK)
+                {
+                    var question = res.Data;
+                    return PartialView(question);
+                }
+            }
+
             return PartialView();
         }
 
@@ -68,15 +80,27 @@ namespace FluentWork_Admin.Controllers
                     .ToList();
                 return BadRequest(new { message = errors });
             }
-
-            var res = await _questionService.Create(model);
             
-            if (res.StatusCode == StatusCodes.Status400BadRequest)
+            if (model.Id > 0) //Update
             {
-                return BadRequest(res);
+                var resUpdate = await _questionService.Update(model);
+
+                if (resUpdate.StatusCode == StatusCodes.Status400BadRequest)
+                {
+                    return BadRequest(resUpdate);
+                }
+
+                return Json(resUpdate);
             }
 
-            return Json(res);
-        }
+            var resCreate = await _questionService.Create(model);
+            
+            if (resCreate.StatusCode == StatusCodes.Status400BadRequest)
+            {
+                return BadRequest(resCreate);
+            }
+
+            return Json(resCreate);
+            }
     }
 }

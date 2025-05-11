@@ -10,7 +10,7 @@ namespace FluentWork_Admin.Models
         public int Id { get; set; }
 
         [Required]
-        [JsonPropertyName("topic")]
+        [JsonPropertyName("type")]
         public string Type { get; set; } = string.Empty;
 
         [JsonPropertyName("vocabulary_topic")]
