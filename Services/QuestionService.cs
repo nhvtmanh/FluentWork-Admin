@@ -9,6 +9,7 @@ namespace FluentWork_Admin.Services
         public Task<ApiResponse<M_Question>> GetById(int id);
         public Task<ApiResponse<M_Question>> Create(M_Question question);
         public Task<ApiResponse<M_Question>> Update(M_Question question);
+        public Task<ApiResponse<M_Question>> Delete(int id);
     }
     public class QuestionService : IQuestionService
     {
@@ -116,6 +117,7 @@ namespace FluentWork_Admin.Services
                 explanation = question.Explanation,
                 options = question.Options.Select(o => new
                 {
+                    id = o.Id,
                     option_text = o.OptionText,
                     is_correct = o.IsCorrect
                 }).ToList()
@@ -130,6 +132,25 @@ namespace FluentWork_Admin.Services
                     StatusCode = (int)response.StatusCode,
                     Message = [ApiSuccessMessage.UPDATE],
                     Data = await response.Content.ReadFromJsonAsync<M_Question>(),
+                };
+                return successResponse;
+            }
+            else
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiResponse<M_Question>>();
+                return errorResponse!;
+            }
+        }
+        public async Task<ApiResponse<M_Question>> Delete(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"questions/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var successResponse = new ApiResponse<M_Question>
+                {
+                    StatusCode = (int)response.StatusCode,
+                    Message = [ApiSuccessMessage.DELETE],
                 };
                 return successResponse;
             }

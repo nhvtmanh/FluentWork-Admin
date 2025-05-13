@@ -126,6 +126,39 @@ function ShowEditModal(id) {
     });
 }
 
+function ShowDeleteModal(id) {
+    swal.fire({
+        title: 'Are you sure you want to delete this item?',
+        text: `You won't be able to revert this action!`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
+        customClass: {
+            confirmButton: "btn btn-danger mx-1",
+            cancelButton: "btn btn-outline-secondary mx-1"
+        },
+        buttonsStyling: false,
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+            return $.ajax({
+                url: '/Question/Delete',
+                type: 'DELETE',
+                data: { id: id },
+                dataType: 'json',
+                success: function (response) {
+                    ShowToastNoti('success', response.message);
+                    dataTable.ajax.reload();
+                },
+                error: function (err) {
+                    //Handle other errors (e.g., server errors)
+                    ShowToastNoti('error', 'An error occurred, please try again.');
+                }
+            });
+        }
+    });
+}
+
 function Submit() {
     let form = $("#questionForm");
 
@@ -137,8 +170,8 @@ function Submit() {
     formData.append("__RequestVerificationToken", $('input[name="__RequestVerificationToken"]').val());
 
     $.ajax({
-        type: "POST",
         url: "/Question/P_AddOrEdit",
+        type: "POST",
         data: formData,
         contentType: false,
         processData: false,

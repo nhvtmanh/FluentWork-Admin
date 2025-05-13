@@ -7,7 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FluentWork_Admin.Controllers
 {
-    public class QuestionController : Controller
+    public class QuestionController : BaseController<QuestionController>
     {
         private readonly IQuestionService _questionService;
 
@@ -19,26 +19,8 @@ namespace FluentWork_Admin.Controllers
         public IActionResult Index()
         {
             ViewData["ActiveMenu"] = "Question";
-            ViewBag.QuestionTypes = EnglishTypesProvider.GetTopics();
-            ViewBag.QuestionLevels = EnglishLevelsProvider.GetLevels();
+            GetTypeTopicLevelDropdown();
             return View();
-        }
-
-        [HttpGet]
-        public IActionResult GetTopicsByType(string type)
-        {
-            List<SelectListItem> topics = new List<SelectListItem>();
-
-            if (type == EnglishType.VOCABULARY)
-            {
-                topics = VocabularyTopicsProvider.GetTopics();
-            }
-            else if (type == EnglishType.GRAMMAR)
-            {
-                topics = GrammarTopicsProvider.GetTopics();
-            }
-
-            return Json(topics);
         }
 
         [HttpGet]
@@ -50,9 +32,7 @@ namespace FluentWork_Admin.Controllers
 
         public async Task<IActionResult> P_AddOrEdit(int id)
         {
-            ViewBag.GrammarTopics = GrammarTopicsProvider.GetTopics();
-            ViewBag.VocabularyTopics = VocabularyTopicsProvider.GetTopics();
-            ViewBag.EnglishLevels = EnglishLevelsProvider.GetLevels();
+            GetTypeTopicLevelDropdown();
 
             if (id > 0) //Show edit modal
             {
@@ -80,7 +60,7 @@ namespace FluentWork_Admin.Controllers
                     .ToList();
                 return BadRequest(new { message = errors });
             }
-            
+
             if (model.Id > 0) //Update
             {
                 var resUpdate = await _questionService.Update(model);
@@ -94,13 +74,26 @@ namespace FluentWork_Admin.Controllers
             }
 
             var resCreate = await _questionService.Create(model);
-            
+
             if (resCreate.StatusCode == StatusCodes.Status400BadRequest)
             {
                 return BadRequest(resCreate);
             }
 
             return Json(resCreate);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var res = await _questionService.Delete(id);
+
+            if (res.StatusCode == StatusCodes.Status400BadRequest)
+            {
+                return BadRequest(res);
             }
+
+            return Json(res);
+        }
     }
 }

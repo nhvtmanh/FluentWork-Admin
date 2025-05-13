@@ -1,4 +1,19 @@
-﻿@section Scripts {
+﻿<style>
+    #dataTable_length label {
+        margin-top: 10px;
+    }
+
+    #dataTable_filter label {
+        margin-top: 10px;
+        margin-right: 5px;
+    }
+
+    #dataTable_wrapper div:last-child {
+        margin-bottom: 5px;
+    }
+</style>
+
+@section Scripts {
     <partial name="_ValidationScriptsPartial"></partial>
     <script src="~/controller/question.js" asp-append-version="true"></script>
 }
@@ -13,11 +28,10 @@
 
 <!-- Dropdown list -->
 <div class="row">
-
     <!-- Type dropdown -->
     <div class="col form-group">
         <label for="questionType">Type</label>
-        <select class="form-control" id="questionType" name="questionType" asp-items="ViewBag.QuestionTypes">
+        <select class="form-control" id="questionType" asp-items="ViewBag.EnglishTypes">
             <option value="">All</option>
         </select>
     </div>
@@ -25,7 +39,7 @@
     <!-- Topic dropdown -->
     <div class="col form-group">
         <label for="questionTopic">Topic</label>
-        <select class="form-control" id="questionTopic" name="questionTopic">
+        <select class="form-control" id="questionTopic">
             <option value="">All</option>
         </select>
     </div>
@@ -33,49 +47,40 @@
     <!-- Level dropdown -->
     <div class="col form-group">
         <label for="questionLevel">Level</label>
-        <select class="form-control" id="questionLevel" name="questionLevel" asp-items="ViewBag.QuestionLevels">
+        <select class="form-control" id="questionLevel" asp-items="ViewBag.EnglishLevels">
             <option value="">All</option>
         </select>
     </div>
-
 </div>
 
 <!-- Questions table -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Questions table</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="dataTable" class="table table-sm table-bordered table-striped nowrap w-100">
-                <thead>
-                    <tr>
-                        <th class="no-sort text-center">Action</th>
-                        <th class="text-center">Question</th>
-                        <th class="text-center">Type</th>
-                        <th class="text-center">Topic</th>
-                        <th class="text-center">Level</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                    <tr>
-                        <th class="no-sort text-center">Action</th>
-                        <th class="text-center">Question</th>
-                        <th class="text-center">Type</th>
-                        <th class="text-center">Topic</th>
-                        <th class="text-center">Level</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
+<div class="table-responsive">
+    <table id="dataTable" class="table table-sm table-bordered table-striped nowrap w-100">
+        <thead>
+            <tr>
+                <th class="no-sort text-center">Action</th>
+                <th class="text-center">Question</th>
+                <th class="text-center">Type</th>
+                <th class="text-center">Topic</th>
+                <th class="text-center">Level</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <th class="no-sort text-center">Action</th>
+                <th class="text-center">Question</th>
+                <th class="text-center">Type</th>
+                <th class="text-center">Topic</th>
+                <th class="text-center">Level</th>
+            </tr>
+        </tfoot>
+    </table>
 </div>
 
 <div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" id="questionModalContent">
-
         </div>
     </div>
 </div>
