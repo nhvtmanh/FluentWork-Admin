@@ -15,12 +15,12 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"></partial>
-    <script src="~/controller/question.js" asp-append-version="true"></script>
+    <script src="~/controller/lesson.js" asp-append-version="true"></script>
 }
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Manage questions</h1>
+    <h1 class="h3 mb-0 text-gray-800">Manage lessons</h1>
     <button class="d-none d-sm-inline-block btn btn-primary shadow-sm" id="btnCreate" onclick="ShowAddModal()">
         <i class="fas fa-plus text-white-50"></i> Create new
     </button>
@@ -30,36 +30,36 @@
 <div class="row">
     <!-- Type dropdown -->
     <div class="col form-group">
-        <label for="questionType">Type</label>
-        <select class="form-control" id="questionType" asp-items="ViewBag.EnglishTypes">
+        <label for="lessonType">Type</label>
+        <select class="form-control" id="lessonType" asp-items="ViewBag.EnglishTypes">
             <option value="">All</option>
         </select>
     </div>
 
     <!-- Topic dropdown -->
     <div class="col form-group">
-        <label for="questionTopic">Topic</label>
-        <select class="form-control" id="questionTopic">
+        <label for="lessonTopic">Topic</label>
+        <select class="form-control" id="lessonTopic">
             <option value="">All</option>
         </select>
     </div>
 
     <!-- Level dropdown -->
     <div class="col form-group">
-        <label for="questionLevel">Level</label>
-        <select class="form-control" id="questionLevel" asp-items="ViewBag.EnglishLevels">
+        <label for="lessonLevel">Level</label>
+        <select class="form-control" id="lessonLevel" asp-items="ViewBag.EnglishLevels">
             <option value="">All</option>
         </select>
     </div>
 </div>
 
-<!-- Questions table -->
+<!-- Lessons table -->
 <div class="table-responsive">
     <table id="dataTable" class="table table-sm table-bordered table-striped w-100">
         <thead>
             <tr>
                 <th class="no-sort text-center">Action</th>
-                <th class="text-center">Question</th>
+                <th class="text-center">Lesson</th>
                 <th class="text-center">Type</th>
                 <th class="text-center">Topic</th>
                 <th class="text-center">Level</th>
@@ -69,7 +69,7 @@
         <tfoot>
             <tr>
                 <th class="no-sort text-center">Action</th>
-                <th class="text-center">Question</th>
+                <th class="text-center">Lesson</th>
                 <th class="text-center">Type</th>
                 <th class="text-center">Topic</th>
                 <th class="text-center">Level</th>
@@ -78,9 +78,9 @@
     </table>
 </div>
 
-<div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
+<div class="modal fade" id="lessonModal" tabindex="-1" aria-labelledby="lessonModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content" id="questionModalContent">
+        <div class="modal-content" id="lessonModalContent">
         </div>
     </div>
 </div>

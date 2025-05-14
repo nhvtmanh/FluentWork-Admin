@@ -54,13 +54,14 @@ function ToggleTopicDropdown() {
 
 //Render action buttons in DataTable
 function RenderActionButtons(id) {
-    let html = ``;
-    html += `<button class="btn btn-success btn-circle mx-1" onclick="ShowEditModal(${id})">
-                <i class="fas fa-pen"></i>
-            </button>`;
-    html += `<button class="btn btn-danger btn-circle" onclick="ShowDeleteModal(${id})">
-                <i class="fas fa-trash"></i>
-            </button>`
+    let html = `<div class="d-flex justify-content-center align-items-center">
+                    <button class="btn btn-success btn-circle mx-1" onclick="ShowEditModal(${id})">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                    <button class="btn btn-danger btn-circle mx-1" onclick="ShowDeleteModal(${id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>`;
     return html;
 }
 

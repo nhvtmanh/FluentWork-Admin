@@ -12,6 +12,7 @@ builder.Services.AddHttpClient("ApiClient", httpClient =>
 });
 
 builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddScoped<ILessonService, LessonService>();
 
 var app = builder.Build();
 

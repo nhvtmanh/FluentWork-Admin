@@ -17,7 +17,7 @@
     </button>
 </div>
 
-<!-- Modal Body -->
+<!-- Modal Body --> 
 <div class="modal-body">
     <form id="questionForm" method="post" asp-antiforgery="true">
         @if (Model != null)
@@ -29,10 +29,8 @@
             <!-- Type select -->
             <div class="form-group col-md-4">
                 <label asp-for="Type" class="text-gray-800">Type</label>
-                <select asp-for="Type" class="form-control" required onchange="ToggleTopicDropdown()">
+                <select asp-for="Type" asp-items="ViewBag.EnglishTypes" class="form-control" required onchange="ToggleTopicDropdown()">
                     <option value="">-- Select type --</option>
-                    <option value="Vocabulary">Vocabulary</option>
-                    <option value="Grammar">Grammar</option>
                 </select>
                 <span asp-validation-for="Type"></span>
             </div>
