@@ -1,0 +1,68 @@
+﻿<style>
+    #dataTable_length label {
+        margin-top: 10px;
+    }
+
+    #dataTable_filter label {
+        margin-top: 10px;
+        margin-right: 5px;
+    }
+
+    #dataTable_wrapper div:last-child {
+        margin-bottom: 5px;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script src="~/controller/flashcard.js" asp-append-version="true"></script>
+}
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Manage flashcards</h1>
+    <button class="d-none d-sm-inline-block btn btn-primary shadow-sm" id="btnCreate" onclick="ShowAddModal()">
+        <i class="fas fa-plus text-white-50"></i> Create new
+    </button>
+</div>
+
+<!-- Dropdown list -->
+<div class="row">
+    <!-- Topic dropdown -->
+    <div class="col-4 form-group">
+        <label for="flashcardTopic">Topic</label>
+        <select class="form-control" id="flashcardTopic" asp-items="ViewBag.VocabularyTopics">
+            <option value="">All</option>
+        </select>
+    </div>
+</div>
+
+<!-- Flashcards table -->
+<div class="table-responsive">
+    <table id="dataTable" class="table table-sm table-bordered table-striped w-100">
+        <thead>
+            <tr>
+                <th class="no-sort text-center">Action</th>
+                <th class="text-center">Word</th>
+                <th class="text-center">Definition</th>
+                <th class="text-center">Topic</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <th class="no-sort text-center">Action</th>
+                <th class="text-center">Word</th>
+                <th class="text-center">Definition</th>
+                <th class="text-center">Topic</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="modal fade" id="flashcardModal" tabindex="-1" aria-labelledby="flashcardModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" id="flashcardModalContent">
+        </div>
+    </div>
+</div>

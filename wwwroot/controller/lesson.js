@@ -131,7 +131,7 @@ function InitCkeditor() {
 
     ClassicEditor
         .create(document.querySelector('#Content'), {
-            licenseKey: '',
+            licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDgwNDQ3OTksImp0aSI6IjZkOTY0NGU2LWE3ZjAtNDE0ZC1iYzRhLWRhMmYxMjdlZWQ1MCIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjAyNmU4ODRlIn0.5YvRgupp6IucLyEvXGpCXlEo0hQa6JeeNDxLNfzip-upki1mObHzG382XICRr_NioYMDytNY3_nk31LASB8lTA',
             plugins: [Essentials, Bold, Italic, Font, Paragraph],
             toolbar: [
                 'undo', 'redo', '|', 'bold', 'italic', '|',

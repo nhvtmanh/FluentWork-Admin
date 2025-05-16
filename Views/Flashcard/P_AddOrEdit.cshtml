@@ -1,0 +1,59 @@
+﻿@model M_Flashcard
+
+<!-- Modal Header -->
+<div class="modal-header">
+    <h5 class="modal-title text-gray-900" id="flashcardModalLabel">
+        @if (Model != null)
+        {
+            <span>Edit flashcard</span>
+        }
+        else
+        {
+            <span>Add new flashcard</span>
+        }
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- Modal Body -->
+<div class="modal-body">
+    <form id="flashcardForm" method="post" asp-antiforgery="true">
+        @if (Model != null)
+        {
+            <input type="hidden" name="Id" value="@Model.Id" />
+        }
+
+        <div class="form-row">
+            <!-- Vocabulary Topic select -->
+            <div class="form-group col-md-5" id="vocabularyTopicGroup">
+                <label asp-for="Topic" class="text-gray-800">Topic</label>
+                <select asp-for="Topic" asp-items="ViewBag.VocabularyTopics" class="form-control" required>
+                    <option value="">-- Select topic --</option>
+                </select>
+                <span asp-validation-for="Topic"></span>
+            </div>
+
+            <!-- Word -->
+            <div class="form-group col">
+                <label asp-for="Word" class="text-gray-800">Word</label>
+                <input asp-for="Word" class="form-control" placeholder="Enter the word ..." required>
+                <span asp-validation-for="Word"></span>
+            </div>
+        </div>
+
+        <!-- Definition -->
+        <div class="form-group">
+            <label asp-for="Definition" class="text-gray-800">Definition</label>
+            <textarea asp-for="Definition" class="form-control" rows="2" placeholder="Enter the definition ..." required></textarea>
+            <span asp-validation-for="Definition"></span>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Footer -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" onclick="Submit()">Save Flashcard</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+</div>

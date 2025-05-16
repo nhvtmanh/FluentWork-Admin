@@ -86,3 +86,16 @@ function RenderEnglishLevel(level) {
         html = `<span class="badge p-2" style="background-color: #FFDBEA">${level}</span>`;
     return html;
 }
+
+//Render Vocabulary topic in DataTable
+function RenderVocabularyTopic(topic) {
+    let html = '';
+    if (topic === 'Information Technology') {
+        html = `<span class="badge p-2" style="background-color: #CBEBF7">${topic}</span>`;
+    } else if (topic === 'Business') {
+        html = `<span class="badge p-2" style="background-color: #DCF7DE">${topic}</span>`;
+    } else if (topic === 'Finance') {
+        html = `<span class="badge p-2" style="background-color: #FFFEDB">${topic}</span>`;
+    }
+    return html;
+}
