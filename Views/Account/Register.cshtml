@@ -2,6 +2,8 @@
     Layout = null;
 }
 
+@model M_Account_Register
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,6 +25,8 @@
     <!-- Custom styles for this template-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Toastr styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 </head>
 
 <body class="bg-gradient-primary">
@@ -39,29 +43,30 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an account</h1>
                             </div>
-                            <form class="user">
+                            <form id="registerForm" class="user" method="post" asp-antiforgery="true">
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                           placeholder="Full name">
+                                    <input asp-for="Fullname" class="form-control form-control-user" placeholder="Full name" required>
+                                    <span asp-validation-for="Fullname" class="error"></span>
                                 </div>
+
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                               placeholder="Username">
+                                        <input asp-for="Username" class="form-control form-control-user" placeholder="Username" required>
+                                        <span asp-validation-for="Username" class="error"></span>
                                     </div>
+
                                     <div class="col-sm-6">
-                                        <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                               placeholder="Email address">
+                                        <input asp-for="Email" class="form-control form-control-user" placeholder="Email address" required>
+                                        <span asp-validation-for="Email" class="error"></span>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
-                                    
+                                    <input asp-for="Password" class="form-control form-control-user" placeholder="Password" required>
+                                    <span asp-validation-for="Password" class="error"></span>
                                 </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" 
-                                           placeholder="Password">
-                                </div>
-                                <a href="/admin/login" class="btn btn-primary btn-user btn-block">
+
+                                <a onclick="Register()" class="btn btn-primary btn-user btn-block">
                                     Register account
                                 </a>
                                 
@@ -94,6 +99,12 @@
     <!-- Custom scripts for all pages-->
     <script src="~/js/sb-admin-2.min.js"></script>
 
+    <!-- Toastr scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script src="~/controller/account.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 
 </html>

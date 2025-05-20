@@ -1,3 +1,4 @@
+using FluentWork_Admin.Extensions;
 using FluentWork_Admin.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,8 +10,14 @@ builder.Services.AddHttpClient("ApiClient", httpClient =>
 {
     string apiUrl = builder.Configuration.GetValue<string>("ApiConfig:ApiUrl")!;
     httpClient.BaseAddress = new Uri(apiUrl);
-});
+}).AddHttpMessageHandler<JwtAuthorizationHandler>();
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddTransient<JwtAuthorizationHandler>();
+builder.Services.AddSession();
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<IFlashcardService, FlashcardService>();
@@ -27,6 +34,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 

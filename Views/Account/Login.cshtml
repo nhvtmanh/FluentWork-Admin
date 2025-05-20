@@ -2,6 +2,8 @@
     Layout = null;
 }
 
+@model M_Account_Login
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +16,7 @@
     <meta name="author" content="">
 
     <title>FluentWork</title>
-    
+
     <!-- Custom fonts for this template-->
     <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -23,6 +25,8 @@
     <!-- Custom styles for this template-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Toastr styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 </head>
 
 <body class="bg-gradient-primary">
@@ -44,15 +48,14 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome to FluentWork</h1>
                                     </div>
-                                    <form class="user">
+                                    <form id="loginForm" class="user" method="post" asp-antiforgery="true">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                   id="exampleInputEmail" aria-describedby="emailHelp"
-                                                   placeholder="Email address">
+                                            <input asp-for="Email" class="form-control form-control-user" placeholder="Email address" required>
+                                            <span asp-validation-for="Email" class="error"></span>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                   id="exampleInputPassword" placeholder="Password">
+                                            <input asp-for="Password" class="form-control form-control-user" placeholder="Password" required>
+                                            <span asp-validation-for="Password" class="error"></span>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -62,18 +65,17 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <a href="/admin/dashboard" class="btn btn-primary btn-user btn-block">
+                                        <a onclick="Login()" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </a>
-                                        
                                         @* <a href="javascript:void(0);" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                        <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
                                         <a href="javascript:void(0);" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                        <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                                         </a> *@
                                     </form>
-                                    
+
                                     <div class="text-center mt-3">
                                         <a class="small" href="/admin/forgot-password">Forgot password?</a>
                                     </div>
@@ -102,6 +104,12 @@
     <!-- Custom scripts for all pages-->
     <script src="~/js/sb-admin-2.min.js"></script>
 
+    <!-- Toastr scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script src="~/controller/account.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 
 </html>
