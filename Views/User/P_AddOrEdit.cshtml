@@ -1,0 +1,66 @@
+﻿@model M_User
+
+<!-- Modal Header -->
+<div class="modal-header">
+    <h5 class="modal-title text-gray-900" id="userModalLabel">
+        @if (Model != null)
+        {
+            <span>Edit user</span>
+        }
+        else
+        {
+            <span>Add new user</span>
+        }
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- Modal Body -->
+<div class="modal-body">
+    <form id="userForm" method="post" asp-antiforgery="true">
+        @if (Model != null)
+        {
+            <input type="hidden" name="Id" value="@Model.Id" />
+        }
+
+        <div class="form-row">
+            <!-- Role select -->
+            <div class="form-group col-md-5">
+                <label asp-for="Role" class="text-gray-800">Role</label>
+                <select asp-for="Role" asp-items="ViewBag.UserRoles" class="form-control" required>
+                    <option value="">-- Select role --</option>
+                </select>
+                <span asp-validation-for="Role"></span>
+            </div>
+
+            <!-- Username -->
+            <div class="form-group col">
+                <label asp-for="Username" class="text-gray-800">Username</label>
+                <input asp-for="Username" class="form-control" placeholder="Enter the username ..." required>
+                <span asp-validation-for="Username"></span>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label asp-for="Email" class="text-gray-800">Email</label>
+            <input asp-for="Email" class="form-control" placeholder="Enter the email ..." required>
+            <span asp-validation-for="Email"></span>
+        </div>
+
+        <!-- Fullname -->
+        <div class="form-group">
+            <label asp-for="Fullname" class="text-gray-800">Fullname</label>
+            <input asp-for="Fullname" class="form-control" placeholder="Enter the fullname ..." required>
+            <span asp-validation-for="Fullname"></span>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Footer -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" onclick="Submit()">Save User</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+</div>

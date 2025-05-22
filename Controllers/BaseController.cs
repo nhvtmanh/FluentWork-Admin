@@ -15,6 +15,11 @@ namespace FluentWork_Admin.Controllers
             ViewBag.EnglishLevels = EnglishLevelsProvider.GetLevels();
         }
 
+        protected void GetUserRoleDropdown()
+        {
+            ViewBag.UserRoles = UserRolesProvider.GetRoles();
+        }
+
         [HttpGet]
         public IActionResult GetTopicsByType(string type)
         {

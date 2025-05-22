@@ -26,7 +26,8 @@ namespace FluentWork_Admin.Services
 
             if (response.IsSuccessStatusCode)
             {
-                var token = await response.Content.ReadAsStringAsync();
+                var responseData = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                var token = responseData!["access_token"];
 
                 //Store token in session
                 _httpContextAccessor.HttpContext?.Session.SetString("token", token);
@@ -40,7 +41,6 @@ namespace FluentWork_Admin.Services
             }
             else
             {
-                Console.WriteLine(await response.Content.ReadAsStringAsync());
                 var errorResponse = await response.Content.ReadFromJsonAsync<ApiResponse<M_Account_Login>>();
                 return errorResponse!;
             }
@@ -65,8 +65,6 @@ namespace FluentWork_Admin.Services
             }
             else
             {
-                Console.WriteLine(await response.Content.ReadAsStringAsync());
-
                 var errorResponse = await response.Content.ReadFromJsonAsync<ApiResponse<M_Account_Register>>();
                 return errorResponse!;
             }
