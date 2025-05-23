@@ -34,13 +34,17 @@ namespace FluentWork_Admin.Controllers
 
             var res = await _authService.Login(account);
 
-            if (res.StatusCode == StatusCodes.Status200OK)
+            if (res.StatusCode == StatusCodes.Status201Created)
             {
                 return Ok(res);
             }
-            else if (res.StatusCode == StatusCodes.Status401Unauthorized)
+            else if (res.StatusCode == StatusCodes.Status400BadRequest)
             {
-                return Unauthorized(res);
+                return BadRequest(res);
+            }
+            else if (res.StatusCode == StatusCodes.Status404NotFound)
+            {
+                return NotFound(res);
             }
             else
             {
@@ -54,13 +58,13 @@ namespace FluentWork_Admin.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        public IActionResult Register()
+        public IActionResult ForgotPassword()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(M_Account_Register account)
+        public async Task<IActionResult> ForgotPassword(M_Account_ForgotPassword account)
         {
             if (!ModelState.IsValid)
             {
@@ -72,25 +76,24 @@ namespace FluentWork_Admin.Controllers
                 return BadRequest(new { message = errors });
             }
 
-            var res = await _authService.Register(account);
+            var res = await _authService.ForgotPassword(account);
 
             if (res.StatusCode == StatusCodes.Status201Created)
             {
-                return StatusCode(StatusCodes.Status201Created, res);
+                return Ok(res);
             }
             else if (res.StatusCode == StatusCodes.Status400BadRequest)
             {
                 return BadRequest(res);
             }
+            else if (res.StatusCode == StatusCodes.Status404NotFound)
+            {
+                return NotFound(res);
+            }
             else
             {
                 return Json(res);
             }
-        }
-
-        public IActionResult ForgotPassword()
-        {
-            return View();
         }
     }
 }

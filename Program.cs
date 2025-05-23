@@ -52,11 +52,6 @@ app.MapControllerRoute(
     defaults: new { controller = "Account", action = "Login" });
 
 app.MapControllerRoute(
-    name: "Admin register",
-    pattern: "admin/register",
-    defaults: new { controller = "Account", action = "Register" });
-
-app.MapControllerRoute(
     name: "Admin forgot password",
     pattern: "admin/forgot-password",
     defaults: new { controller = "Account", action = "ForgotPassword" });

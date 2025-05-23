@@ -1,4 +1,6 @@
 ﻿using FluentWork_Admin.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace FluentWork_Admin.Services
@@ -7,7 +9,7 @@ namespace FluentWork_Admin.Services
     {
         Task<ApiResponse<M_Account_Login>> Login(M_Account_Login account);
         Task Logout();
-        Task<ApiResponse<M_Account_Register>> Register(M_Account_Register account);
+        Task<ApiResponse<M_Account_ForgotPassword>> ForgotPassword(M_Account_ForgotPassword account);
     }
     public class AuthService : IAuthService
     {
@@ -26,8 +28,10 @@ namespace FluentWork_Admin.Services
 
             if (response.IsSuccessStatusCode)
             {
-                var responseData = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
-                var token = responseData!["access_token"];
+                string responseData = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>(responseData);
+
+                string token = data!.access_token;
 
                 //Store token in session
                 _httpContextAccessor.HttpContext?.Session.SetString("token", token);
@@ -35,7 +39,7 @@ namespace FluentWork_Admin.Services
                 var successResponse = new ApiResponse<M_Account_Login>
                 {
                     StatusCode = (int)response.StatusCode,
-                    Message = [ApiSuccessMessage.CREATE]
+                    Message = ((JArray)data.message).ToObject<List<string>>()!
                 };
                 return successResponse;
             }
@@ -49,23 +53,22 @@ namespace FluentWork_Admin.Services
         {
             _httpContextAccessor.HttpContext?.Session.Remove("token");
         }
-        public async Task<ApiResponse<M_Account_Register>> Register(M_Account_Register account)
+        public async Task<ApiResponse<M_Account_ForgotPassword>> ForgotPassword(M_Account_ForgotPassword account)
         {
-            var response = await _httpClient.PostAsJsonAsync("auth/register", account);
+            var response = await _httpClient.PostAsJsonAsync("auth/forgot-password", account);
 
             if (response.IsSuccessStatusCode)
             {
-                var successResponse = new ApiResponse<M_Account_Register>
+                var successResponse = new ApiResponse<M_Account_ForgotPassword>
                 {
                     StatusCode = (int)response.StatusCode,
-                    Message = [ApiSuccessMessage.CREATE],
-                    Data = await response.Content.ReadFromJsonAsync<M_Account_Register>(),
+                    Message = ["Password changed successfully"]
                 };
                 return successResponse;
             }
             else
             {
-                var errorResponse = await response.Content.ReadFromJsonAsync<ApiResponse<M_Account_Register>>();
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiResponse<M_Account_ForgotPassword>>();
                 return errorResponse!;
             }
         }
