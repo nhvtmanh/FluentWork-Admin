@@ -11,7 +11,7 @@ namespace FluentWork_Admin.Controllers
     {
         private readonly IQuestionService _questionService;
 
-        public QuestionController(IQuestionService questionService)
+        public QuestionController(IQuestionService questionService, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             _questionService = questionService;
         }

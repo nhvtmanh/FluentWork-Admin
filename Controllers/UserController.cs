@@ -8,7 +8,7 @@ namespace FluentWork_Admin.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             _userService = userService;
         }

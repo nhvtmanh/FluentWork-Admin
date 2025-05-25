@@ -42,6 +42,10 @@ namespace FluentWork_Admin.Controllers
             {
                 return BadRequest(res);
             }
+            else if (res.StatusCode == StatusCodes.Status401Unauthorized)
+            {
+                return Unauthorized(res);
+            }
             else if (res.StatusCode == StatusCodes.Status404NotFound)
             {
                 return NotFound(res);

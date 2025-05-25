@@ -1,4 +1,5 @@
 using FluentWork_Admin.Extensions;
+using FluentWork_Admin.Middlewares;
 using FluentWork_Admin.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<IFlashcardService, FlashcardService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 var app = builder.Build();
 
@@ -37,6 +39,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseSession();
+app.UseMiddleware<JwtRoleMiddleware>();
 
 app.UseRouting();
 

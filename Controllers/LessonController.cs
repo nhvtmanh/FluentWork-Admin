@@ -9,7 +9,7 @@ namespace FluentWork_Admin.Controllers
     {
         private readonly ILessonService _lessonService;
 
-        public LessonController(ILessonService lessonService)
+        public LessonController(ILessonService lessonService, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             _lessonService = lessonService;
         }

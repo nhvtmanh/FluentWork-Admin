@@ -1,16 +1,12 @@
 ﻿@section Scripts {
     <!-- Chart scripts -->
     <script src="~/vendor/chart.js/Chart.min.js"></script>
-    <script src="~/js/demo/chart-area-demo.js" asp-append-version="true"></script>
-    <script src="~/js/demo/chart-pie-demo.js" asp-append-version="true"></script>
+    <script src="~/controller/dashboard.js" asp-append-version="true"></script>
 }
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
-    </a>
 </div>
 
 <!-- Content Row -->
@@ -22,10 +18,10 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="font-weight-bold text-primary text-uppercase mb-1" style="font-size: 18px;">
                             Lessons
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">23</div>
+                        <div id="divTotalLessons" class="h5 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-book fa-2x text-gray-300"></i>
@@ -41,10 +37,10 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-lg font-weight-bold text-success text-uppercase mb-1">
+                        <div class="font-weight-bold text-success text-uppercase mb-1" style="font-size: 18px;">
                             Questions
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">378</div>
+                        <div id="divTotalQuestions" class="h5 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-question fa-2x text-gray-300"></i>
@@ -54,19 +50,19 @@
         </div>
     </div>
 
-    <!-- Tests Card -->
+    <!-- Flashcards Card -->
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-info shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-lg font-weight-bold text-info text-uppercase mb-1">
-                            Tests
+                        <div class="font-weight-bold text-info text-uppercase mb-1" style="font-size: 18px;">
+                            Flashcards
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
+                        <div id="divTotalFlashcards" class="h5 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-pen-fancy fa-2x text-gray-300"></i>
+                        <i class="fas fa-credit-card fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
@@ -79,10 +75,10 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">
+                        <div class="font-weight-bold text-warning text-uppercase mb-1" style="font-size: 18px;">
                             Users
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                        <div id="divTotalUsers" class="h5 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-user fa-2x text-gray-300"></i>
@@ -107,7 +103,7 @@
             <!-- Card Body -->
             <div class="card-body">
                 <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
+                    <canvas id="learnersAreaChart"></canvas>
                 </div>
             </div>
         </div>
@@ -124,7 +120,7 @@
             <!-- Card Body -->
             <div class="card-body">
                 <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
+                    <canvas id="rolesPieChart"></canvas>
                 </div>
                 <div class="mt-4 text-center small">
                     <span class="mr-2">

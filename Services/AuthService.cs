@@ -1,4 +1,5 @@
 ﻿using FluentWork_Admin.Models;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using static System.Formats.Asn1.AsnWriter;
@@ -30,8 +31,21 @@ namespace FluentWork_Admin.Services
             {
                 string responseData = await response.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<dynamic>(responseData);
-
                 string token = data!.access_token;
+
+                //Decode token using JsonWebTokenHandler
+                var handler = new JsonWebTokenHandler();
+                var jwt = handler.ReadJsonWebToken(token);
+                var role = jwt.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+
+                if (role != "Admin")
+                {
+                    return new ApiResponse<M_Account_Login>
+                    {
+                        StatusCode = StatusCodes.Status401Unauthorized,
+                        Message = ["You do not have permission to access this resource!"]
+                    };
+                }
 
                 //Store token in session
                 _httpContextAccessor.HttpContext?.Session.SetString("token", token);
@@ -39,7 +53,7 @@ namespace FluentWork_Admin.Services
                 var successResponse = new ApiResponse<M_Account_Login>
                 {
                     StatusCode = (int)response.StatusCode,
-                    Message = ((JArray)data.message).ToObject<List<string>>()!
+                    Message = ["Login successfully!"]
                 };
                 return successResponse;
             }
@@ -62,7 +76,7 @@ namespace FluentWork_Admin.Services
                 var successResponse = new ApiResponse<M_Account_ForgotPassword>
                 {
                     StatusCode = (int)response.StatusCode,
-                    Message = ["Password changed successfully"]
+                    Message = ["Password changed successfully!"]
                 };
                 return successResponse;
             }

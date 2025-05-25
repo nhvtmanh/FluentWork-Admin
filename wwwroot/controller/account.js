@@ -22,7 +22,7 @@
             }, 1000);
         },
         error: function (err) {
-            if (err.status === 400 || err.status === 404) {
+            if (err.status === 400 || err.status === 401 || err.status === 404) {
                 let errorMessages = err.responseJSON.message;
                 errorMessages.forEach(function (message) {
                     ShowToastNoti('warning', message);
