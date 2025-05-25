@@ -61,15 +61,28 @@ function LoadDataTable() {
                 className: "text-center align-middle"
             },
             {
-                data: "create_at",
+                data: "createdAt",
+                render: (data, type, row, meta) => data ? moment(data).format('HH:mm DD-MM-YYYY') : '',
                 className: "align-middle"
             },
             {
-                data: "update_at",
+                data: "updatedAt",
+                render: (data, type, row, meta) => data ? moment(data).format('HH:mm DD-MM-YYYY') : '',
                 className: "align-middle"
             }
         ]
     });
+}
+
+function RenderUserRole(role) {
+    let html = '';
+    if (role === 'Admin')
+        html = `<span class="badge p-2" style="background-color: #FFCFC8">${role}</span>`;
+    else if (role ==='Learner')
+        html = `<span class="badge p-2" style="background-color: #D0F9ED">${role}</span>`;
+    else if (role === 'Instructor')
+        html = `<span class="badge p-2" style="background-color: #E1D7FB">${role}</span>`;
+    return html;
 }
 
 function ShowAddModal() {

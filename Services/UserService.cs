@@ -1,4 +1,6 @@
 ﻿using FluentWork_Admin.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FluentWork_Admin.Services
 {
@@ -33,10 +35,13 @@ namespace FluentWork_Admin.Services
 
             if (response.IsSuccessStatusCode)
             {
+                string responseData = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>(responseData);
+                
                 var successResponse = new ApiResponse<List<M_User>>
                 {
                     StatusCode = (int)response.StatusCode,
-                    Data = await response.Content.ReadFromJsonAsync<List<M_User>>(),
+                    Data = ((JArray)data!.users).ToObject<List<M_User>>()
                 };
                 return successResponse;
             }
@@ -72,10 +77,10 @@ namespace FluentWork_Admin.Services
                 username = user.Username,
                 email = user.Email,
                 fullname = user.Fullname,
-                password_hash = user.PasswordHash,
+                //password_hash = user.PasswordHash,
                 role = user.Role,
-                create_at = user.CreateAt,
-                update_at = user.UpdateAt
+                //create_at = user.CreateAt,
+                //update_at = user.UpdateAt
             };
 
             var response = await _httpClient.PatchAsJsonAsync($"users/{user.Id}", data);

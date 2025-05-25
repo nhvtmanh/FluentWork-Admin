@@ -41,9 +41,8 @@ namespace FluentWork_Admin.Services
                 
                 var successResponse = new ApiResponse<List<M_Flashcard>>
                 {
-                    
                     StatusCode = (int)response.StatusCode,
-                    Data = ((JArray)data!.flashcards).ToObject<List<M_Flashcard>>()!
+                    Data = ((JArray)data!.flashcards).ToObject<List<M_Flashcard>>()
                 };
                 return successResponse;
             }
