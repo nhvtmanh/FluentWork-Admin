@@ -1,4 +1,6 @@
 ﻿using FluentWork_Admin.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FluentWork_Admin.Services
 {
@@ -34,10 +36,14 @@ namespace FluentWork_Admin.Services
 
             if (response.IsSuccessStatusCode)
             {
+                string responseData = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<dynamic>(responseData);
+                
                 var successResponse = new ApiResponse<List<M_Flashcard>>
                 {
+                    
                     StatusCode = (int)response.StatusCode,
-                    Data = await response.Content.ReadFromJsonAsync<List<M_Flashcard>>(),
+                    Data = ((JArray)data!.flashcards).ToObject<List<M_Flashcard>>()!
                 };
                 return successResponse;
             }

@@ -56,10 +56,11 @@ namespace FluentWork_Admin.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult Logout()
         {
-            _authService.Logout();
-            return RedirectToAction("Login", "Account");
+            var res = _authService.Logout();
+            return Ok(res);
         }
 
         public IActionResult ForgotPassword()

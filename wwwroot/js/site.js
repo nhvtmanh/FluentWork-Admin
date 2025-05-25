@@ -99,3 +99,37 @@ function RenderVocabularyTopic(topic) {
     }
     return html;
 }
+
+//Show account modal
+function ShowAccountModal() {
+    $("#accountModalContent").load('/Account/P_AddOrEdit', function () {
+        $("#accountModal").modal('show');
+    });
+}
+
+function Logout() {
+    $.ajax({
+        url: "/Account/Logout",
+        type: "GET",
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            ShowToastNoti('success', response.message);
+
+            setTimeout(function () {
+                window.location.href = '/admin/login';
+            }, 1000);
+        },
+        error: function (err) {
+            if (err.status === 400 || err.status === 404) {
+                let errorMessages = err.responseJSON.message;
+                errorMessages.forEach(function (message) {
+                    ShowToastNoti('warning', message);
+                })
+            } else {
+                //Handle other errors (e.g., server errors)
+                ShowToastNoti('error', 'An error occurred, please try again.');
+            }
+        }
+    });
+}

@@ -9,7 +9,7 @@ namespace FluentWork_Admin.Services
     public interface IAuthService
     {
         Task<ApiResponse<M_Account_Login>> Login(M_Account_Login account);
-        Task Logout();
+        ApiResponse<object> Logout();
         Task<ApiResponse<M_Account_ForgotPassword>> ForgotPassword(M_Account_ForgotPassword account);
     }
     public class AuthService : IAuthService
@@ -63,9 +63,15 @@ namespace FluentWork_Admin.Services
                 return errorResponse!;
             }
         }
-        public async Task Logout()
+        public ApiResponse<object> Logout()
         {
             _httpContextAccessor.HttpContext?.Session.Remove("token");
+
+            return new ApiResponse<object>
+            {
+                StatusCode = StatusCodes.Status200OK,
+                Message = ["Logout successfully!"]
+            };
         }
         public async Task<ApiResponse<M_Account_ForgotPassword>> ForgotPassword(M_Account_ForgotPassword account)
         {
