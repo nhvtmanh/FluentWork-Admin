@@ -58,14 +58,26 @@ namespace FluentWork_Admin.Controllers
                 return BadRequest(new { message = errors });
             }
 
-            var res = await _userService.Update(model);
-
-            if (res.StatusCode == StatusCodes.Status400BadRequest)
+            if (model.Id > 0) //Update
             {
-                return BadRequest(res);
+                var resUpdate = await _userService.Update(model);
+
+                if (resUpdate.StatusCode == StatusCodes.Status400BadRequest)
+                {
+                    return BadRequest(resUpdate);
+                }
+
+                return Json(resUpdate);
             }
 
-            return Json(res);
+            var resCreate = await _userService.Create(model);
+
+            if (resCreate.StatusCode == StatusCodes.Status400BadRequest)
+            {
+                return BadRequest(resCreate);
+            }
+
+            return Json(resCreate);
         }
 
         [HttpDelete]

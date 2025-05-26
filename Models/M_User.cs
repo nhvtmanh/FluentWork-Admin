@@ -22,6 +22,10 @@ namespace FluentWork_Admin.Models
         [JsonProperty("fullname")]
         public string Fullname { get; set; } = string.Empty;
 
+        [DataType(DataType.Password)]
+        [JsonProperty("password")]
+        public string? Password { get; set; }
+
         [Required]
         [JsonProperty("role")]
         public string Role { get; set; } = string.Empty;

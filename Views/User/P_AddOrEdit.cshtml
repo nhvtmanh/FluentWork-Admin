@@ -27,35 +27,47 @@
 
         <div class="form-row">
             <!-- Role select -->
-            <div class="form-group col-md-5">
-                <label asp-for="Role" class="text-gray-800">Role</label>
+            <div class="form-group col-md-6">
+                <label asp-for="Role" class="text-gray-800">Role <span class="text-danger">*</span></label>
                 <select asp-for="Role" asp-items="ViewBag.UserRoles" class="form-control" required>
                     <option value="">-- Select role --</option>
                 </select>
                 <span asp-validation-for="Role"></span>
             </div>
 
-            <!-- Username -->
-            <div class="form-group col">
-                <label asp-for="Username" class="text-gray-800">Username</label>
-                <input asp-for="Username" class="form-control" placeholder="Enter the username ..." required>
-                <span asp-validation-for="Username"></span>
+            <!-- Fullname -->
+            <div class="form-group col-md-6">
+                <label asp-for="Fullname" class="text-gray-800">Fullname <span class="text-danger">*</span></label>
+                <input asp-for="Fullname" class="form-control" placeholder="Enter the fullname ..." required>
+                <span asp-validation-for="Fullname"></span>
             </div>
         </div>
 
-        <!-- Email -->
-        <div class="form-group">
-            <label asp-for="Email" class="text-gray-800">Email</label>
-            <input asp-for="Email" class="form-control" placeholder="Enter the email ..." required>
-            <span asp-validation-for="Email"></span>
+        <div class="form-row">
+            <!-- Username -->
+            <div class="form-group col-md-6">
+                <label asp-for="Username" class="text-gray-800">Username <span class="text-danger">*</span></label>
+                <input asp-for="Username" class="form-control" placeholder="Enter the username ..." required>
+                <span asp-validation-for="Username"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group col-md-6">
+                <label asp-for="Email" class="text-gray-800">Email <span class="text-danger">*</span></label>
+                <input asp-for="Email" class="form-control" placeholder="Enter the email ..." required>
+                <span asp-validation-for="Email"></span>
+            </div>
         </div>
 
-        <!-- Fullname -->
-        <div class="form-group">
-            <label asp-for="Fullname" class="text-gray-800">Fullname</label>
-            <input asp-for="Fullname" class="form-control" placeholder="Enter the fullname ..." required>
-            <span asp-validation-for="Fullname"></span>
-        </div>
+        @if (Model == null)
+        {
+            <!-- Password -->
+            <div class="form-group">
+                <label asp-for="Password" class="text-gray-800">Password <span class="text-danger">*</span></label>
+                <input asp-for="Password" class="form-control" placeholder="Enter the password ..." required>
+                <span asp-validation-for="Password"></span>
+            </div>
+        }
     </form>
 </div>
 

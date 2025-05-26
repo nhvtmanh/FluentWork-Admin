@@ -28,7 +28,7 @@
         <div class="form-row">
             <!-- Vocabulary Topic select -->
             <div class="form-group col-md-5" id="vocabularyTopicGroup">
-                <label asp-for="Topic" class="text-gray-800">Topic</label>
+                <label asp-for="Topic" class="text-gray-800">Topic <span class="text-danger">*</span></label>
                 <select asp-for="Topic" asp-items="ViewBag.VocabularyTopics" class="form-control" required>
                     <option value="">-- Select topic --</option>
                 </select>
@@ -37,7 +37,7 @@
 
             <!-- Word -->
             <div class="form-group col">
-                <label asp-for="Word" class="text-gray-800">Word</label>
+                <label asp-for="Word" class="text-gray-800">Word <span class="text-danger">*</span></label>
                 <input asp-for="Word" class="form-control" placeholder="Enter the word ..." required>
                 <span asp-validation-for="Word"></span>
             </div>
@@ -45,7 +45,7 @@
 
         <!-- Definition -->
         <div class="form-group">
-            <label asp-for="Definition" class="text-gray-800">Definition</label>
+            <label asp-for="Definition" class="text-gray-800">Definition <span class="text-danger">*</span></label>
             <textarea asp-for="Definition" class="form-control" rows="2" placeholder="Enter the definition ..." required></textarea>
             <span asp-validation-for="Definition"></span>
         </div>

@@ -8,6 +8,7 @@ namespace FluentWork_Admin.Services
     {
         public Task<ApiResponse<List<M_User>>> GetList(string? role);
         public Task<ApiResponse<M_User>> GetById(int id);
+        public Task<ApiResponse<M_User>> Create(M_User user);
         public Task<ApiResponse<M_User>> Update(M_User user);
         public Task<ApiResponse<M_User>> Delete(int id);
     }
@@ -70,6 +71,35 @@ namespace FluentWork_Admin.Services
                 return errorResponse!;
             }
         }
+        public async Task<ApiResponse<M_User>> Create(M_User user)
+        {
+            var data = new
+            {
+                username = user.Username,
+                email = user.Email,
+                fullname = user.Fullname,
+                password = user.Password,
+                role = user.Role
+            };
+
+            var response = await _httpClient.PostAsJsonAsync("users", data);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var successResponse = new ApiResponse<M_User>
+                {
+                    StatusCode = (int)response.StatusCode,
+                    Message = [ApiSuccessMessage.CREATE],
+                    Data = await response.Content.ReadFromJsonAsync<M_User>(),
+                };
+                return successResponse;
+            }
+            else
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiResponse<M_User>>();
+                return errorResponse!;
+            }
+        }
         public async Task<ApiResponse<M_User>> Update(M_User user)
         {
             var data = new
@@ -77,10 +107,7 @@ namespace FluentWork_Admin.Services
                 username = user.Username,
                 email = user.Email,
                 fullname = user.Fullname,
-                //password_hash = user.PasswordHash,
-                role = user.Role,
-                //create_at = user.CreateAt,
-                //update_at = user.UpdateAt
+                role = user.Role
             };
 
             var response = await _httpClient.PatchAsJsonAsync($"users/{user.Id}", data);

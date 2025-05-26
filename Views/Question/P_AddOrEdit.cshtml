@@ -28,7 +28,7 @@
         <div class="form-row">
             <!-- Type select -->
             <div class="form-group col-md-4">
-                <label asp-for="Type" class="text-gray-800">Type</label>
+                <label asp-for="Type" class="text-gray-800">Type <span class="text-danger">*</span></label>
                 <select asp-for="Type" asp-items="ViewBag.EnglishTypes" class="form-control" required onchange="ToggleTopicDropdown()">
                     <option value="">-- Select type --</option>
                 </select>
@@ -37,7 +37,7 @@
 
             <!-- Vocabulary Topic select -->
             <div class="form-group col-md-4" id="vocabularyTopicGroup" style="display: none;">
-                <label asp-for="VocabularyTopic" class="text-gray-800">Topic</label>
+                <label asp-for="VocabularyTopic" class="text-gray-800">Topic <span class="text-danger">*</span></label>
                 <select asp-for="VocabularyTopic" asp-items="ViewBag.VocabularyTopics" class="form-control" required>
                     <option value="">-- Select topic --</option>
                 </select>
@@ -46,7 +46,7 @@
 
             <!-- Grammar Topic select -->
             <div class="form-group col-md-4" id="grammarTopicGroup" style="display: none;">
-                <label asp-for="GrammarTopic" class="text-gray-800">Topic</label>
+                <label asp-for="GrammarTopic" class="text-gray-800">Topic <span class="text-danger">*</span></label>
                 <select asp-for="GrammarTopic" asp-items="ViewBag.GrammarTopics" class="form-control" required>
                     <option value="">-- Select topic --</option>
                 </select>
@@ -55,7 +55,7 @@
 
             <!-- Level select -->
             <div class="form-group col-md-4">
-                <label asp-for="Level" class="text-gray-800">Level</label>
+                <label asp-for="Level" class="text-gray-800">Level <span class="text-danger">*</span></label>
                 <select asp-for="Level" asp-items="ViewBag.EnglishLevels" class="form-control" required>
                     <option value="">-- Select level --</option>
                 </select>
@@ -65,21 +65,21 @@
 
         <!-- Question text -->
         <div class="form-group">
-            <label asp-for="QuestionText" class="text-gray-800">Question text</label>
+            <label asp-for="QuestionText" class="text-gray-800">Question text <span class="text-danger">*</span></label>
             <textarea asp-for="QuestionText" class="form-control" rows="2" placeholder="Enter the question ..." required></textarea>
             <span asp-validation-for="QuestionText"></span>
         </div>
 
         <!-- Explanation -->
         <div class="form-group">
-            <label asp-for="Explanation" class="text-gray-800">Explanation</label>
+            <label asp-for="Explanation" class="text-gray-800">Explanation <span class="text-danger">*</span></label>
             <textarea asp-for="Explanation" class="form-control" rows="2" placeholder="Enter the explanation ..." required></textarea>
             <span asp-validation-for="Explanation"></span>
         </div>
 
         <!-- Options -->
         <div class="form-group">
-            <label class="text-gray-800">Options</label>
+            <label class="text-gray-800">Options <span class="text-danger">*</span></label>
 
             @if (Model != null)
             {
