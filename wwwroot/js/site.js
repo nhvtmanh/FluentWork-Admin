@@ -101,9 +101,45 @@ function RenderVocabularyTopic(topic) {
 }
 
 //Show account modal
-function ShowAccountModal() {
-    $("#accountModalContent").load('/Account/P_AddOrEdit', function () {
+function ShowAccountModal(id) {
+    $("#accountModalContent").load(`/User/P_AddOrEdit?id=${id}`, function () {
         $("#accountModal").modal('show');
+        $('#Role').prop('disabled', true); //Disable Role select in account modal
+    });
+}
+
+//Submit account modal
+function Submit() {
+    let form = $("#userForm");
+
+    if (!form.valid()) {
+        return;
+    }
+
+    let formData = new FormData(form[0]);
+    formData.append("__RequestVerificationToken", $('input[name="__RequestVerificationToken"]').val());
+
+    $.ajax({
+        url: "/User/P_AddOrEdit",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            ShowToastNoti('success', response.message);
+            $("#accountModal").modal("hide");
+        },
+        error: function (err) {
+            if (err.status === 400) {
+                let errorMessages = err.responseJSON.message;
+                errorMessages.forEach(function (message) {
+                    ShowToastNoti('error', message);
+                })
+            } else {
+                //Handle other errors (e.g., server errors)
+                ShowToastNoti('error', 'An error occurred, please try again.');
+            }
+        }
     });
 }
 

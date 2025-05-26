@@ -1,4 +1,5 @@
-﻿using FluentWork_Admin.Models;
+﻿using FluentWork_Admin.Common;
+using FluentWork_Admin.Models;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -49,6 +50,7 @@ namespace FluentWork_Admin.Services
 
                 //Store token in session
                 _httpContextAccessor.HttpContext?.Session.SetString("token", token);
+                AccountInfo.AccountId = int.Parse(jwt.Claims.FirstOrDefault(c => c.Type == "sub")?.Value!);
 
                 var successResponse = new ApiResponse<M_Account_Login>
                 {

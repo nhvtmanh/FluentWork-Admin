@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using FluentWork_Admin.Common
+@{
+    int accountId = AccountInfo.AccountId;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -284,7 +289,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="userDropdown">
-                                <a class="dropdown-item" onclick="ShowAccountModal()">
+                                <a class="dropdown-item" onclick="ShowAccountModal(@accountId)">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -327,7 +332,7 @@
 
     <!-- Account Modal-->
     <div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="accountModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" id="accountModalContent">
             </div>
         </div>

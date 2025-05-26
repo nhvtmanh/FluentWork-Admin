@@ -1,4 +1,10 @@
-﻿<style>
+﻿@using FluentWork_Admin.Common
+
+@{
+    int accountId = AccountInfo.AccountId;
+}
+
+<style>
     #dataTable_length label {
         margin-top: 10px;
     }
@@ -17,6 +23,8 @@
     <partial name="_ValidationScriptsPartial"></partial>
     <script src="~/controller/user.js" asp-append-version="true"></script>
 }
+
+<input type="hidden" id="accountId" value="@accountId" />
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">

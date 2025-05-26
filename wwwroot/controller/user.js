@@ -70,7 +70,17 @@ function LoadDataTable() {
                 render: (data, type, row, meta) => data ? moment(data).format('HH:mm DD-MM-YYYY') : '',
                 className: "align-middle"
             }
-        ]
+        ],
+        initComplete: function () {
+            //Delete current account row
+            const idToDelete = $('#accountId').val();
+
+            if (idToDelete) {
+                dataTable.rows(function (idx, data, node) {
+                    return data.id == idToDelete;
+                }).remove().draw();
+            }
+        }
     });
 }
 
