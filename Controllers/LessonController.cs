@@ -1,5 +1,4 @@
-﻿using FluentWork_Admin.Enums;
-using FluentWork_Admin.Models;
+﻿using FluentWork_Admin.Models;
 using FluentWork_Admin.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +8,7 @@ namespace FluentWork_Admin.Controllers
     {
         private readonly ILessonService _lessonService;
 
-        public LessonController(ILessonService lessonService, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        public LessonController(ILessonService lessonService)
         {
             _lessonService = lessonService;
         }

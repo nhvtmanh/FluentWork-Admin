@@ -1,9 +1,6 @@
-﻿using FluentWork_Admin.Enums;
-using FluentWork_Admin.Models;
+﻿using FluentWork_Admin.Models;
 using FluentWork_Admin.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FluentWork_Admin.Controllers
 {
@@ -11,7 +8,7 @@ namespace FluentWork_Admin.Controllers
     {
         private readonly IQuestionService _questionService;
 
-        public QuestionController(IQuestionService questionService, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        public QuestionController(IQuestionService questionService)
         {
             _questionService = questionService;
         }

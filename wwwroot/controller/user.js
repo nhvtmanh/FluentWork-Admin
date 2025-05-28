@@ -165,7 +165,7 @@ function Submit() {
             if (err.status === 400) {
                 let errorMessages = err.responseJSON.message;
                 errorMessages.forEach(function (message) {
-                    ShowToastNoti('error', message);
+                    ShowToastNoti('warning', message);
                 })
             } else {
                 //Handle other errors (e.g., server errors)

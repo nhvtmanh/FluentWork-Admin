@@ -102,15 +102,14 @@ function RenderVocabularyTopic(topic) {
 
 //Show account modal
 function ShowAccountModal(id) {
-    $("#accountModalContent").load(`/User/P_AddOrEdit?id=${id}`, function () {
+    $("#accountModalContent").load(`/Account/P_EditAccount?id=${id}`, function () {
         $("#accountModal").modal('show');
-        $('#Role').prop('disabled', true); //Disable Role select in account modal
     });
 }
 
 //Submit account modal
-function Submit() {
-    let form = $("#userForm");
+function SubmitAccountModal() {
+    let form = $("#profileForm");
 
     if (!form.valid()) {
         return;
@@ -120,7 +119,7 @@ function Submit() {
     formData.append("__RequestVerificationToken", $('input[name="__RequestVerificationToken"]').val());
 
     $.ajax({
-        url: "/User/P_AddOrEdit",
+        url: "/Account/P_EditAccount",
         type: "POST",
         data: formData,
         contentType: false,
@@ -128,12 +127,13 @@ function Submit() {
         success: function (response) {
             ShowToastNoti('success', response.message);
             $("#accountModal").modal("hide");
+            $("#span_username").text(response.data.username);
         },
         error: function (err) {
             if (err.status === 400) {
                 let errorMessages = err.responseJSON.message;
                 errorMessages.forEach(function (message) {
-                    ShowToastNoti('error', message);
+                    ShowToastNoti('warning', message);
                 })
             } else {
                 //Handle other errors (e.g., server errors)

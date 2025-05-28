@@ -1,5 +1,4 @@
 ﻿using FluentWork_Admin.Models;
-using Microsoft.Extensions.Options;
 
 namespace FluentWork_Admin.Services
 {

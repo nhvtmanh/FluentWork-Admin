@@ -1,11 +1,10 @@
 ﻿using FluentWork_Admin.Models;
 using FluentWork_Admin.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace FluentWork_Admin.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController<AccountController>
     {
         private readonly IAuthService _authService;
 
@@ -94,6 +93,50 @@ namespace FluentWork_Admin.Controllers
             else if (res.StatusCode == StatusCodes.Status404NotFound)
             {
                 return NotFound(res);
+            }
+            else
+            {
+                return Json(res);
+            }
+        }
+
+        public async Task<IActionResult> P_EditAccount(int id)
+        {
+            GetUserRoleDropdown();
+
+            var res = await _authService.GetById(id);
+
+            if (res.StatusCode == StatusCodes.Status200OK)
+            {
+                var user = res.Data;
+                return PartialView(user);
+            }
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> P_EditAccount(M_User model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState
+                    .Where(x => x.Value!.Errors.Any())
+                    .SelectMany(x => x.Value!.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                return BadRequest(new { message = errors });
+            }
+
+            var res = await _authService.Update(model);
+
+            if (res.StatusCode == StatusCodes.Status400BadRequest)
+            {
+                return BadRequest(res);
+            }
+            else if (res.StatusCode == StatusCodes.Status400BadRequest)
+            {
+                return BadRequest(res);
             }
             else
             {

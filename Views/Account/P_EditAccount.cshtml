@@ -1,0 +1,59 @@
+﻿@model M_User
+
+<!-- Modal Header -->
+<div class="modal-header">
+    <h5 class="modal-title text-gray-900">
+        <span>Profile</span>
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- Modal Body -->
+<div class="modal-body">
+    <form id="profileForm" method="post" asp-antiforgery="true">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Role" value="@Model.Role" />
+
+        <div class="form-row">
+            <!-- Role select -->
+            <div class="form-group col-md-6">
+                <label asp-for="Role" class="text-gray-800">Role <span class="text-danger">*</span></label>
+                <select asp-for="Role" asp-items="ViewBag.UserRoles" class="form-control" required disabled>
+                    <option value="">-- Select role --</option>
+                </select>
+                <span asp-validation-for="Role"></span>
+            </div>
+
+            <!-- Fullname -->
+            <div class="form-group col-md-6">
+                <label asp-for="Fullname" class="text-gray-800">Fullname <span class="text-danger">*</span></label>
+                <input asp-for="Fullname" class="form-control" placeholder="Enter the fullname ..." required>
+                <span asp-validation-for="Fullname"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <!-- Username -->
+            <div class="form-group col-md-6">
+                <label asp-for="Username" class="text-gray-800">Username <span class="text-danger">*</span></label>
+                <input asp-for="Username" class="form-control" placeholder="Enter the username ..." required>
+                <span asp-validation-for="Username"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group col-md-6">
+                <label asp-for="Email" class="text-gray-800">Email <span class="text-danger">*</span></label>
+                <input asp-for="Email" class="form-control" placeholder="Enter the email ..." required>
+                <span asp-validation-for="Email"></span>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Footer -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" onclick="SubmitAccountModal()">Save</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+</div>

@@ -8,7 +8,7 @@ namespace FluentWork_Admin.Controllers
     {
         private readonly IFlashcardService _flashcardService;
 
-        public FlashcardController(IFlashcardService flashcardService, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        public FlashcardController(IFlashcardService flashcardService)
         {
             _flashcardService = flashcardService;
         }

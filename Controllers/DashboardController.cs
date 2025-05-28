@@ -1,5 +1,4 @@
-﻿using FluentWork_Admin.Extensions;
-using FluentWork_Admin.Services;
+﻿using FluentWork_Admin.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FluentWork_Admin.Controllers
@@ -8,7 +7,7 @@ namespace FluentWork_Admin.Controllers
     {
         private readonly IDashboardService _dashboardService;
 
-        public DashboardController(IDashboardService dashboardService, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        public DashboardController(IDashboardService dashboardService)
         {
             _dashboardService = dashboardService;
         }

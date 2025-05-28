@@ -1,5 +1,4 @@
-﻿using FluentWork_Admin.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace FluentWork_Admin.Models

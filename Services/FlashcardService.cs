@@ -38,7 +38,7 @@ namespace FluentWork_Admin.Services
             {
                 string responseData = await response.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<dynamic>(responseData);
-                
+
                 var successResponse = new ApiResponse<List<M_Flashcard>>
                 {
                     StatusCode = (int)response.StatusCode,
