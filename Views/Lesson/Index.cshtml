@@ -11,11 +11,26 @@
     #dataTable_wrapper div:last-child {
         margin-bottom: 5px;
     }
+
+    .parent_container_iframe {
+        width: 100%;
+    }
+
+    .video_container_iframe {
+        height: auto !important;
+        padding-bottom: 0 !important;
+    }
+
+    .video_iframe {
+        position: relative !important;
+        min-height: 50vh;
+    }
 </style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"></partial>
     <script src="~/controller/lesson.js" asp-append-version="true"></script>
+    <script charset="utf-8" src="//cdn.iframe.ly/embed.js?api_key=4622542ee7ba9a5ca20cfd"></script>
 }
 
 <!-- Page Heading -->
@@ -78,7 +93,7 @@
     </table>
 </div>
 
-<div class="modal fade" id="lessonModal" tabindex="-1" aria-labelledby="lessonModalLabel" aria-hidden="true">
+<div class="modal fade" id="lessonModal" aria-labelledby="lessonModalLabel" aria-hidden="true" data-focus="false">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" id="lessonModalContent">
         </div>

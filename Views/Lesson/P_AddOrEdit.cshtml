@@ -97,6 +97,14 @@
             <textarea asp-for="Content" class="form-control" rows="2" placeholder="Enter the content ..." required></textarea>
             <span asp-validation-for="Content"></span>
         </div>
+
+        @* <!-- Test display content -->
+        @if (Model != null)
+        {
+            <div>
+                @Html.Raw(Model.Content)
+            </div>
+        } *@
     </form>
 </div>
 

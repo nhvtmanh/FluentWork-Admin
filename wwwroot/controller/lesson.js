@@ -126,17 +126,21 @@ function InitCkeditor() {
         Bold,
         Italic,
         Font,
-        Paragraph
+        Paragraph,
+        MediaEmbed
     } = CKEDITOR;
 
     ClassicEditor
         .create(document.querySelector('#Content'), {
-            licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDgwNDQ3OTksImp0aSI6IjZkOTY0NGU2LWE3ZjAtNDE0ZC1iYzRhLWRhMmYxMjdlZWQ1MCIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjAyNmU4ODRlIn0.5YvRgupp6IucLyEvXGpCXlEo0hQa6JeeNDxLNfzip-upki1mObHzG382XICRr_NioYMDytNY3_nk31LASB8lTA',
-            plugins: [Essentials, Bold, Italic, Font, Paragraph],
+            licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3Nzk0OTQzOTksImp0aSI6IjhmNDQ0ZDQyLTliN2MtNDgxYy05OTVlLWIxOWQ1M2FmZDY4NyIsImxpY2Vuc2VkSG9zdHMiOlsiMTI3LjAuMC4xIiwibG9jYWxob3N0IiwiMTkyLjE2OC4qLioiLCIxMC4qLiouKiIsIjE3Mi4qLiouKiIsIioudGVzdCIsIioubG9jYWxob3N0IiwiKi5sb2NhbCJdLCJ1c2FnZUVuZHBvaW50IjoiaHR0cHM6Ly9wcm94eS1ldmVudC5ja2VkaXRvci5jb20iLCJkaXN0cmlidXRpb25DaGFubmVsIjpbImNsb3VkIiwiZHJ1cGFsIl0sImxpY2Vuc2VUeXBlIjoiZGV2ZWxvcG1lbnQiLCJmZWF0dXJlcyI6WyJEUlVQIiwiRTJQIiwiRTJXIl0sInZjIjoiZWFkY2M3M2YifQ.7zjkcmko8c62Vco7L6NkzPa35j2Ilq56vMAfQAwlegrUnNB-zMVSSZNw8Geb8GvrNYYoxWNKZLYzMpMZxpMdRg',
+            plugins: [Essentials, Bold, Italic, Font, Paragraph, MediaEmbed],
             toolbar: [
                 'undo', 'redo', '|', 'bold', 'italic', '|',
-                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
-            ]
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'mediaEmbed'
+            ],
+            mediaEmbed: {
+                previewsInData: true
+            }
         })
         .then(newEditor => {
             editor = newEditor;
@@ -146,6 +150,16 @@ function InitCkeditor() {
 
 function ShowEditModal(id) {
     $("#lessonModalContent").load(`/Lesson/P_AddOrEdit?id=${id}`, function () {
+        //document.querySelectorAll('div[data-oembed-url]').forEach(element => {
+        //    $(element).addClass("parent_container_iframe");
+
+        //    let child = element.firstChild;
+        //    $(child).addClass("video_container_iframe");
+
+        //    let iframe = child.firstChild;
+        //    $(iframe).addClass("video_iframe");
+        //});
+
         $("#lessonModal").modal('show');
         InitCkeditor();
 
